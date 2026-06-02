@@ -100,10 +100,10 @@ export default function Page() {
       >
         <div className="flex items-center gap-4 px-4 py-2.5 rounded-full border border-white/30 bg-white/15 backdrop-blur-xl">
           {[
-            { href: "#home", icon: "fa-house", title: "Home", active: true },
-            { href: "#about", icon: "fa-user", title: "About" },
-            { href: "#contact", icon: "fa-envelope", title: "Contact" },
-            { href: "#projects", icon: "fa-briefcase", title: "Projects" },
+           { href: "#home", icon: "fa-house", title: "Home", active: true },
+  { href: "#projects", icon: "fa-briefcase", title: "Projects" },
+  { href: "#experience", icon: "fa-user-tie", title: "Experience" },
+  { href: "#contact", icon: "fa-envelope", title: "Contact" },
           ].map((item) => (
             <a
               key={item.href}
