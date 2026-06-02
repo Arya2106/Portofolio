@@ -4,14 +4,21 @@ import Image from "next/image";
 import ProjectCard from "@/components/ProjectCard";
 import { motion } from "framer-motion";
 import { projects, skill, experiences, sosmed } from "../../constanta";
-import { Transition } from "framer-motion";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
-const transition: Transition = {
+import { Transition } from "framer-motion";
+
+const floatTransition: Transition = {
+  duration: 4,
+  repeat: Infinity,
+  ease: [0.42, 0, 0.58, 1],
+};
+
+const breatheTransition: Transition = {
   duration: 8,
   repeat: Infinity,
-  ease: "easeInOut",
+  ease: [0.42, 0, 0.58, 1],
 };
 
 const fadeUp = {
@@ -24,7 +31,7 @@ const fadeUp = {
 const float = {
   animate: {
     y: [0, -10, 0],
-    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+    transition: floatTransition,
   },
 };
 
@@ -32,7 +39,7 @@ const breathe = {
   animate: {
     scale: [1, 1.1, 1],
     opacity: [0.4, 0.7, 0.4],
-    transition,
+    transition: breatheTransition,
   },
 };
 
