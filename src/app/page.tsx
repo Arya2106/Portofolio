@@ -100,10 +100,10 @@ export default function Page() {
       >
         <div className="flex items-center gap-4 px-4 py-2.5 rounded-full border border-white/30 bg-white/15 backdrop-blur-xl">
           {[
-            { href: "/", icon: "fa-house", title: "Home", active: true },
-            { href: "/about", icon: "fa-user", title: "About" },
-            { href: "/contact", icon: "fa-envelope", title: "Contact" },
-            { href: "/projects", icon: "fa-briefcase", title: "Projects" },
+            { href: "#home", icon: "fa-house", title: "Home", active: true },
+            { href: "#about", icon: "fa-user", title: "About" },
+            { href: "#contact", icon: "fa-envelope", title: "Contact" },
+            { href: "#projects", icon: "fa-briefcase", title: "Projects" },
           ].map((item) => (
             <a
               key={item.href}
@@ -122,7 +122,7 @@ export default function Page() {
       </motion.nav>
 
       {/* Hero */}
-      <section className="flex justify-center items-center min-h-screen sm:flex-row flex-col gap-10 px-8">
+      <section className="flex justify-center items-center min-h-screen sm:flex-row flex-col gap-10 px-8" id="home">
         <motion.div
           initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
@@ -188,7 +188,7 @@ export default function Page() {
       </div>
 
       {/* Projects */}
-      <section className="flex flex-col items-center px-8 py-24">
+      <section className="flex flex-col items-center px-8 py-24" id="projects">
         <div className="w-full max-w-5xl">
           <motion.div {...fadeUp} className="mb-16">
             <p className="text-xs font-mono tracking-widest text-neutral-500 mb-2">01 —</p>
@@ -216,7 +216,7 @@ export default function Page() {
       </div>
 
       {/* Experience */}
-      <section className="flex flex-col items-center px-8 py-24">
+      <section className="flex flex-col items-center px-8 py-24" id="experience">
         <div className="w-full max-w-4xl">
           <motion.div {...fadeUp} className="mb-16">
             <p className="text-xs font-mono tracking-widest text-neutral-500 mb-2">02 —</p>
@@ -251,7 +251,7 @@ export default function Page() {
       </div>
 
       {/* Skills */}
-      <section className="flex flex-col items-center px-8 py-24">
+      <section className="flex flex-col items-center px-8 py-24" id="skills">
         <div className="w-full max-w-4xl">
           <motion.div {...fadeUp} className="mb-16">
             <p className="text-xs font-mono tracking-widest text-neutral-500 mb-2">03 —</p>
@@ -307,7 +307,7 @@ export default function Page() {
       </div>
 
       {/* Contact */}
-      <section className="flex flex-col items-center px-8 py-24 pb-32 md:pb-24">
+      <section className="flex flex-col items-center px-8 py-24 pb-32 md:pb-24" id="contact">
         <div className="w-full max-w-4xl">
           <motion.div {...fadeUp} className="mb-16">
             <p className="text-xs font-mono tracking-widest text-neutral-500 mb-2">04 —</p>
