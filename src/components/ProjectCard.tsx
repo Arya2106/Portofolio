@@ -41,7 +41,7 @@ export default function ProjectCard({
             {String(index).padStart(2, "0")} — 2024
           </p>
         )}
-        <h2 className="font-serif text-2xl font-normal text-neutral-900 dark:text-neutral-100 leading-snug mb-2">
+        <h2 className="font-semibold text-2xl text-neutral-900 dark:text-neutral-100 leading-snug mb-2">
           {title}
         </h2>
         <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-5">
