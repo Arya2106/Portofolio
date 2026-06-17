@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
 import { Transition } from "framer-motion";
+import Lanyard from "@/components/Lanyard";
 
 const floatTransition: Transition = {
   duration: 4,
@@ -122,65 +123,57 @@ export default function Page() {
       </motion.nav>
 
       {/* Hero */}
-      <section className="flex justify-center items-center min-h-screen sm:flex-row flex-col gap-10 px-8" id="home">
-        <motion.div
-          initial={{ opacity: 0, x: -80 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          whileHover={{ scale: 1.05, rotate: 2 }}
-        >
-          <motion.div {...float}>
-            <Image
-              src="/assets/images/avatar1.png"
-              alt="Avatar"
-              width={300}
-              height={300}
-              priority
-            />
-          </motion.div>
-        </motion.div>
+{/* Hero */}
+<section className="relative flex justify-center items-center min-h-screen sm:flex-row flex-col gap-10 px-8 overflow-hidden" id="home">
+  
+  {/* Lanyard - kiri */}
+  <div className="w-full sm:w-1/2 h-[-50vh] sm:h-1/2">
+    <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
+  </div>
 
-        <motion.div
-          className="flex flex-col"
-          initial={{ opacity: 0, x: 80 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="xl:text-4xl md:text-3xl text-2xl space-y-1">
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-              Hi, I'm
-            </motion.p>
-            <motion.h1 className="font-bold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-              Muhammad Arya
-            </motion.h1>
-            <motion.h1 className="font-bold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
-              Saputra
-            </motion.h1>
-            <motion.p className="text-lg text-neutral-400" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
-              Web Developer
-            </motion.p>
-          </div>
+  {/* Teks - kanan */}
+  <motion.div
+    className="relative z-10 flex flex-col w-full sm:w-1/2 -mt-50 mb-10 md:mt-0 md:mb-0 xl:mt-0 xl:mb-0"
+    initial={{ opacity: 0, x: 80 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.8, delay: 0.2 }}
+  >
+    <div className="xl:text-4xl md:text-3xl text-2xl space-y-1">
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+        Hi, I'm
+      </motion.p>
+      <motion.h1 className="font-bold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+        Muhammad Arya
+      </motion.h1>
+      <motion.h1 className="font-bold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+        Saputra
+      </motion.h1>
+      <motion.p className="text-lg text-neutral-400" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
+        Web Developer
+      </motion.p>
+    </div>
 
-          <motion.div
-            className="mt-6 flex gap-3 flex-wrap"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-          >
-            <div className="border border-white/10 py-2 px-5 rounded-full bg-white/5 backdrop-blur-sm flex items-center gap-2 text-sm">
-              <motion.span
-                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-2 h-2 rounded-full bg-green-400"
-              />
-              Open To Work
-            </div>
-            <div className="border border-white/10 py-2 px-5 rounded-full bg-white/5 backdrop-blur-sm text-sm">
-              {projects.length} Projects
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
+    <motion.div
+      className="mt-6 flex gap-3 flex-wrap"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1 }}
+    >
+      <div className="border border-white/10 py-2 px-5 rounded-full bg-white/5 backdrop-blur-sm flex items-center gap-2 text-sm">
+        <motion.span
+          animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-2 h-2 rounded-full bg-green-400"
+        />
+        Open To Work
+      </div>
+      <div className="border border-white/10 py-2 px-5 rounded-full bg-white/5 backdrop-blur-sm text-sm">
+        {projects.length} Projects
+      </div>
+    </motion.div>
+  </motion.div>
+
+</section>
 
       {/* Divider */}
       <div className="w-full max-w-4xl mx-auto px-8">
