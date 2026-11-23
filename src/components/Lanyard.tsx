@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import {
   BallCollider,
@@ -36,24 +36,36 @@ interface LanyardProps {
   position?: [number, number, number];
   gravity?: [number, number, number];
   fov?: number;
+  /** FOV kamera di mobile (< 768px). Lebih kecil = kartu tampil lebih besar. */
+  mobileFov?: number;
   transparent?: boolean;
   frontImage?: string | null;
   backImage?: string | null;
   imageFit?: 'cover' | 'contain';
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  /** Element yang menerima pointer event. Kanvas jadi tembus klik, jadi elemen di bawahnya tetap bisa diklik. */
+  eventSource?: React.RefObject<HTMLElement | null>;
+  /** Geser titik gantung kartu secara horizontal, dalam pecahan lebar kanvas (desktop saja). 0 = tengah. */
+  anchorX?: number;
+  /** Geser titik gantung ke atas (satuan dunia 3D) di mobile, supaya kartu tergantung lebih tinggi. */
+  mobileAnchorY?: number;
 }
 
 export default function Lanyard({
   position = [0, 0, 30],
   gravity = [0, -40, 0],
   fov = 20,
+  mobileFov = fov,
   transparent = true,
   frontImage = null,
   backImage = null,
   imageFit = 'cover',
   lanyardImage = null,
-  lanyardWidth = 1
+  lanyardWidth = 1,
+  eventSource,
+  anchorX = 0,
+  mobileAnchorY = 0
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
@@ -63,23 +75,45 @@ export default function Lanyard({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const useSource = !!eventSource;
+
   return (
-    <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
+    <div className="relative z-0 w-full h-full flex justify-center items-center">
+      {/* key: kanvas dibuat ulang saat pindah mobile <-> desktop supaya FOV kamera ikut berubah */}
       <Canvas
-        camera={{ position, fov }}
+        key={isMobile ? 'mobile' : 'desktop'}
+        camera={{ position, fov: isMobile ? mobileFov : fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{ alpha: transparent }}
-        onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+        eventSource={useSource ? (eventSource as React.RefObject<HTMLElement>) : undefined}
+        onCreated={({ gl, setEvents }) => {
+          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          if (useSource) {
+            // Event datang dari elemen lain, jadi hitung posisi pointer relatif ke kanvas sendiri.
+            setEvents({
+              compute: (event, state) => {
+                const rect = gl.domElement.getBoundingClientRect();
+                state.pointer.set(
+                  ((event.clientX - rect.left) / rect.width) * 2 - 1,
+                  -((event.clientY - rect.top) / rect.height) * 2 + 1
+                );
+                state.raycaster.setFromCamera(state.pointer, state.camera);
+              }
+            });
+          }
+        }}
       >
         <ambientLight intensity={Math.PI} />
         <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-          <Band
+          <AnchoredBand
             isMobile={isMobile}
             frontImage={frontImage}
             backImage={backImage}
             imageFit={imageFit}
             lanyardImage={lanyardImage}
             lanyardWidth={lanyardWidth}
+            anchorX={isMobile ? 0 : anchorX}
+            offsetY={isMobile ? mobileAnchorY : 0}
           />
         </Physics>
         <Environment blur={0.75}>
@@ -117,6 +151,14 @@ export default function Lanyard({
   );
 }
 
+// Menghitung posisi titik gantung dari lebar viewport. Band di-remount (key) kalau posisinya
+// berubah karena resize, karena physics body hanya dibuat di posisi awalnya.
+function AnchoredBand({ anchorX = 0, ...props }: Omit<BandProps, 'offsetX'> & { anchorX?: number }) {
+  const viewportWidth = useThree(state => state.viewport.width);
+  const offsetX = viewportWidth * anchorX;
+  return <Band key={`${Math.round(offsetX * 4)}:${props.offsetY ?? 0}`} offsetX={offsetX} {...props} />;
+}
+
 interface BandProps {
   maxSpeed?: number;
   minSpeed?: number;
@@ -126,6 +168,8 @@ interface BandProps {
   imageFit?: 'cover' | 'contain';
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  offsetX?: number;
+  offsetY?: number;
 }
 
 function Band({
@@ -136,8 +180,28 @@ function Band({
   backImage = null,
   imageFit = 'cover',
   lanyardImage = null,
-  lanyardWidth = 1
+  lanyardWidth = 1,
+  offsetX = 0,
+  offsetY = 0
 }: BandProps) {
+  // Selama kartu ditarik dengan jari, cegah halaman ikut ter-scroll.
+  const touchDragging = useRef(false);
+  useEffect(() => {
+    const block = (e: TouchEvent) => {
+      if (touchDragging.current) e.preventDefault();
+    };
+    const reset = () => {
+      touchDragging.current = false;
+    };
+    window.addEventListener('touchmove', block, { passive: false });
+    window.addEventListener('touchend', reset);
+    window.addEventListener('touchcancel', reset);
+    return () => {
+      window.removeEventListener('touchmove', block);
+      window.removeEventListener('touchend', reset);
+      window.removeEventListener('touchcancel', reset);
+    };
+  }, []);
   // Using "any" for refs since the exact types depend on Rapier's internals
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -273,7 +337,7 @@ function Band({
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[offsetX, 4 + offsetY, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type={'fixed' as RigidBodyProps['type']} />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps} type={'dynamic' as RigidBodyProps['type']}>
           <BallCollider args={[0.1]} />
@@ -298,10 +362,12 @@ function Band({
             onPointerOut={() => hover(false)}
             onPointerUp={(e: any) => {
               e.target.releasePointerCapture(e.pointerId);
+              touchDragging.current = false;
               drag(false);
             }}
             onPointerDown={(e: any) => {
               e.target.setPointerCapture(e.pointerId);
+              touchDragging.current = e.pointerType === 'touch';
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())));
             }}
           >

@@ -1,46 +1,69 @@
+// Project yang sudah live dan dipakai orang — tampil paling atas di section Project.
+const featuredProject = {
+    title: "Ngalenyap",
+    tagline: "Sewa villa privat di Puncak & Cisarua, Bogor",
+    description: "Website untuk bisnis sewa villa di kawasan Puncak. Tamu bisa cek villa yang masih kosong berdasarkan tanggal check-in dan check-out, lihat kalender ketersediaan, lalu lanjut booking lewat chat admin.",
+    image: "/assets/projects/ngalenyap.png",
+    url: "https://ngalenyap.site",
+    domain: "ngalenyap.site",
+    stack: ["Laravel", "Alpine.js", "Tailwind CSS", "Vite"],
+    features: [
+        "Cek villa kosong berdasarkan tanggal",
+        "Kalender ketersediaan villa",
+        "Tiga bahasa: Indonesia, Inggris, Arab",
+        "Galeri, artikel & panduan booking",
+        "Program affiliate",
+    ],
+}
+
 const projects = [
     {
     id: 1,
-    title: "Peminjaman Buku",
-    description: "Project Saya Kali ini Adalah Membuat Website Peminjaman Buku Bertujuan Untuk Membantu User Untuk Mengelola Buku Di Perpustakaan",
-    image: "/assets/projects/perpustakaan.png",
-    link : "https://github.com/Aditya-Pratama/portfolio"
+    title: "Pemesanan Villa Online",
+    description: "Booking villa dan pengaturan jadwal menginap, lengkap dengan pembayaran lewat Midtrans dan panel admin.",
+    image: "/assets/projects/villa-app.jpeg",
+    year: "2025",
+    stack: ["Laravel", "Filament", "MySQL", "Midtrans"],
     },
-     {
+    {
     id: 2,
-    title: "Pengaduan Masyarakat",
-    description: "Project Saya Kali ini Adalah membuat Website Pengaduan Masyarakat Terhadap Pemerintah Bertujuan Untuk memudahkan Masyarkat untuk mengadukan keluhan di daerahnya",
-    image: "/assets/projects/pengaduan-masyarakat.png",
-    link : "https://github.com/Aditya-Pratama/portfolio"
+    title: "Dashboard Monitor Realtime",
+    description: "Dashboard untuk memantau data secara langsung, dengan grafik dan notifikasi saat ada nilai yang perlu diperhatikan.",
+    image: "/assets/projects/monitor.png",
+    year: "2024",
+    stack: ["React", "Node.js", "WebSocket"],
     },
     {
     id: 3,
-    title: "Warung Madura",
-    description: "Project Saya Kali ini Adalah membuat Website Warung Madura Bertujuan untuk membantu mengelola daftar barang dan membuat data pembelian beserta mengelola akun",
-    image: "/assets/projects/warung-app.png",
-    link : "https://github.com/Aditya-Pratama/portfolio"
+    title: "Peminjaman Buku",
+    description: "Sistem perpustakaan untuk meminjam, mengembalikan, dan mencari buku, plus pengingat jatuh tempo dan rekap peminjaman.",
+    image: "/assets/projects/perpustakaan.png",
+    year: "2024",
+    stack: ["Laravel", "MySQL", "Tailwind CSS"],
     },
-     {
+    {
     id: 4,
-    title: "Dashboard Monitor Realtime",
-    description: "Dashboard Monitor Realtime ",
-    image: "/assets/projects/monitor.png",
-    link : "https://github.com/Aditya-Pratama/portfolio"
+    title: "Pengaduan Masyarakat",
+    description: "Warga bisa melapor keluhan di daerahnya secara online dan memantau status laporannya sampai ditindaklanjuti.",
+    image: "/assets/projects/pengaduan-masyarakat.png",
+    year: "2024",
+    stack: ["Laravel", "MySQL", "Tailwind CSS"],
     },
-     {
+    {
     id: 5,
-    title: "Pemesanan VIlla Online",
-    description: "Project Saya Kali ini Adalah membuat Website Pemesanan Villa Online Bertujuan untuk memudahkan pemesanan villa dan mengelola jadwal pemesanan",
-    image: "/assets/projects/villa-app.jpeg",
-    link : "https://github.com/Aditya-Pratama/portfolio"
+    title: "Warung Madura",
+    description: "Pencatatan stok barang, transaksi pembelian, dan akun pengguna untuk membantu pemilik warung mengelola jualan harian.",
+    image: "/assets/projects/warung-app.png",
+    year: "2024",
+    stack: ["Laravel", "MySQL", "Tailwind CSS"],
     },
-   
-     {
+    {
     id: 6,
     title: "Weather App",
-    description: "Mencoba Membuat Web Weather App dengan menggunakan API Open Weather Map",
+    description: "Cari cuaca berdasarkan nama kota: suhu, kelembapan, dan kondisi cuaca dari OpenWeatherMap API.",
     image: "/assets/projects/weatherApp.jpg",
-    link : "https://github.com/Aditya-Pratama/portfolio"
+    year: "2024",
+    stack: ["JavaScript", "HTML", "CSS", "OpenWeatherMap"],
     }
 ]
 
@@ -141,83 +164,26 @@ const detailProjects = [
 
 const experiences = [
     {
-    id : 2,
-    position : "TEFA WIKRAMA",
-    description : "-",
-    company : "SMK WIKRAMA BOGOR",
-    duration : "2025",
-    },
-    {
     id : 1,
     position : "Web Developer",
-    description: "Berpengalaman sebagai Web Developer Intern di PT FourBest Synergi, mengerjakan pengembangan fitur, perbaikan bug, integrasi database, dan peningkatan performa aplikasi web.",
+    description: "Mengerjakan pengembangan fitur, perbaikan bug, integrasi database, dan peningkatan performa aplikasi web.",
     company : "PT FourBest Synergi",
-    duration : "2025 - Now",
+    duration : "2025 — Sekarang",
     },
-
+    {
+    id : 2,
+    position : "TEFA Wikrama",
+    description : "",
+    company : "SMK Wikrama Bogor",
+    duration : "2025",
+    },
 ]
 
-const skill = [
-   {
-    id: 1,
-    title: "Javascript",
-    description: "Javascript",
-    image: "/next.svg",
-    },
-    {
-    id: 2,
-    title: "PHP",
-    description: "HTML",
-    image: "/next.svg",
-    },
-    {
-    id: 3,
-    title: "Laravel",
-    description: "HTML",
-    image: "/next.svg",
-    },
-        {
-    id: 4,
-    title: "fillament",
-    description: "HTML",
-    image: "/next.svg",
-    },
-        {
-    id: 5,
-    title: "CodeIgniter",
-    description: "HTML",
-    image: "/next.svg",
-    },
-        {
-    id: 6,
-    title: "React",
-    description: "HTML",
-    image: "/next.svg",
-    },
-    {
-    id: 7,
-    title: "NextJS",
-    description: "HTML",
-    image: "/next.svg",
-    },
-     {
-    id: 8,
-    title: "AI",
-    description: "HTML",
-    image: "/next.svg",
-    },
-    {
-    id: 9,
-    title: "PostgreSQL",
-    description: "HTML",
-    image: "/next.svg",
-    },
-    {
-     id: 10,
-    title: "MySql",
-    description: "HTML",
-    image: "/next.svg",
-    }
+const skillGroups = [
+    { label: "Backend", items: ["PHP", "Laravel", "Filament", "CodeIgniter", "Golang"] },
+    { label: "Frontend", items: ["JavaScript", "React", "Next.js", "Tailwind CSS", "Alpine.js"] },
+    { label: "Database", items: ["MySQL", "PostgreSQL"] },
+    { label: "Lainnya", items: ["Midtrans", "REST API", "WebSocket", "AI tools"] },
 ]
 
 const sosmed = [
@@ -247,4 +213,4 @@ const sosmed = [
     },
 ]
 
-export {projects, skill, experiences,sosmed,detailProjects};
+export {featuredProject, projects, skillGroups, experiences, sosmed, detailProjects};

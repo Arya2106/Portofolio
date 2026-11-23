@@ -1,53 +1,47 @@
-import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function ProjectCard({
-  title,
-  desc,
-  image,
-  tag,
   index,
+  title,
+  description,
+  image,
+  year,
+  stack,
 }: Readonly<{
+  index: number;
   title: string;
-  desc: string;
+  description: string;
   image: string;
-  tag?: string;
-  index?: number;
+  year: string;
+  stack: string[];
 }>) {
   return (
- <div className="group relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-neutral-400 dark:hover:border-neutral-600 w-full cursor-pointer">
-      
-      {/* Image */}
-      <div className="relative overflow-hidden h-52 bg-neutral-950">
+    <article className="group flex flex-col gap-5">
+      <div className="relative aspect-16/10 overflow-hidden rounded-md border border-line bg-surface">
         <Image
           src={image}
-          alt={title}
+          alt={`Tampilan ${title}`}
           fill
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="object-cover object-top grayscale-35 transition duration-700 ease-out group-hover:scale-[1.03] group-hover:grayscale-0"
         />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
-        {tag && (
-          <span className="absolute top-3 left-3 text-[10px] tracking-widest  uppercase text-white bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1 rounded-full">
-            {tag}
-          </span>
-        )}
       </div>
 
-      {/* Body */}
-      <div className="p-5">
-        {index !== undefined && (
-          <p className="text-[11px]  tracking-widest text-neutral-400 dark:text-neutral-500 mb-1.5">
-            {String(index).padStart(2, "0")} — 2024
-          </p>
-        )}
-        <h2 className="font-semibold text-2xl text-neutral-900 dark:text-neutral-100 leading-snug mb-2">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-baseline justify-between font-mono text-xs text-faint">
+          <span>{String(index).padStart(2, "0")}</span>
+          <span>{year}</span>
+        </div>
+        <h3 className="font-display text-2xl font-semibold tracking-tight text-fg md:text-3xl">
           {title}
-        </h2>
-        <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-5">
-          {desc}
-        </p>
+        </h3>
+        <p className="max-w-md text-sm leading-relaxed text-dim">{description}</p>
+        <ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-faint">
+          {stack.map((s) => (
+            <li key={s}>{s}</li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </article>
   );
 }
