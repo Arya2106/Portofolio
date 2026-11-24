@@ -562,7 +562,6 @@ export default function Page() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 font-mono text-xs text-faint md:flex-row md:items-center md:justify-between md:px-8">
           <span suppressHydrationWarning>© {new Date().getFullYear()} Muhammad Arya Saputra</span>
-          <span>Dibuat pakai Next.js, di Bogor</span>
           <a href="#home" className="transition-colors hover:text-fg">
             Kembali ke atas ↑
           </a>
